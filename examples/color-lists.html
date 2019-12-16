@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, minimum-scale=1, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Intro to React</title>
+    <link rel="stylesheet" href="../normalize.slim.css" />
+    <link rel="stylesheet" href="../index.css" />
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <main id="root"></main>
+    <script src="https://unpkg.com/react/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone/babel.min.js"></script>
+    <script type="text/babel">
+      function ColorListItem({ color }) {
+        return <li style={{ color }}>{color}</li>;
+      }
+      function ColorList({ colors }) {
+        return (
+          <ul>
+            {colors.map(color => (
+              <ColorListItem key={color} color={color} />
+            ))}
+          </ul>
+        );
+      }
+      function ShadedColorList({ shade }) {
+        return (
+          <ul>
+            <ColorListItem color={`${shade}Green`} />
+            <ColorListItem color={`${shade}Blue`} />
+            <ColorListItem color={`${shade}SlateGray`} />
+          </ul>
+        );
+      }
+      function App() {
+        return (
+          <section>
+            <ColorList colors={["red", "blue", "purple"]} />
+            <ShadedColorList shade="Dark" />
+            <ShadedColorList shade="Light" />
+          </section>
+        );
+      }
+      ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+  </body>
+</html>

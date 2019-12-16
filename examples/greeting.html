@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, minimum-scale=1, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Intro to React</title>
+    <link rel="stylesheet" href="../normalize.slim.css" />
+    <link rel="stylesheet" href="../index.css" />
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <main id="root"></main>
+    <script src="https://unpkg.com/react/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone/babel.min.js"></script>
+    <script type="text/babel">
+      function Greeting({ name = "Steve", formal = false }) {
+        if (formal) return <p>Hello, {name}.</p>;
+        return <p>Hey, {name}!</p>;
+      }
+      function Layout({ title, children }) {
+        return (
+          <main>
+            <header>
+              <h1>{title}</h1>
+            </header>
+            <section>{children}</section>
+          </main>
+        );
+      }
+      function App() {
+        return (
+          <Layout title="Time to say hi to my friends">
+            <Greeting name="Stephanie" />
+            <Greeting name="Alicia" formal={true} />
+            <Greeting />
+          </Layout>
+        );
+      }
+      ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+  </body>
+</html>

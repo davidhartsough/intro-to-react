@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, minimum-scale=1, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Intro to React</title>
+    <link rel="stylesheet" href="normalize.slim.css" />
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <main id="root"></main>
+    <script src="https://unpkg.com/react/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone/babel.min.js"></script>
+    <script src="index.js"></script>
+    <script type="text/babel">
+      // Components
+      const ColorList = ({
+        colorData,
+        handleColorClick,
+        clickHandlerDescription
+      }) => (
+        <div className="color-list">
+          <p>{clickHandlerDescription}</p>
+          <ul style={{ fontSize: 32 }}>
+            {colorData.map(({ name, hsl }, index) => (
+              <li
+                key={`${name}-${hsl}-${index}`}
+                style={{ color: hsl, userSelect: "none" }}
+                onClick={() => handleColorClick(index)}
+              >
+                {name}
+              </li>
+            ))}
+          </ul>
+        </div>
+      );
+
+      const ColorCreator = ({ createColor }) => {
+        const [name, setName] = React.useState("");
+        const [hue, setHue] = React.useState(0);
+        const handleNameChange = ({ target }) => setName(target.value);
+        const handleHueChange = ({ target }) => setHue(target.value);
+        function handleClick() {
+          const newColor = {
+            name,
+            hsl: `hsl(${hue}, 100%, 50%)`
+          };
+          createColor(newColor);
+          setName("");
+          setHue(0);
+        }
+        const createRandomColor = () => createColor(generateRandomColor());
+        return (
+          <div className="color-creator">
+            <label>
+              Name:
+              <input type="text" value={name} onChange={handleNameChange} />
+            </label>
+            <label>
+              Hue:
+              <input
+                type="number"
+                value={hue}
+                onChange={handleHueChange}
+                min="0"
+                max="355"
+                step="5"
+              />
+            </label>
+            <div className="actions">
+              <button onClick={handleClick} disabled={!name.length}>
+                Create color
+              </button>
+              <p style={{ marginRight: 8 }}>Or...</p>
+              <button onClick={createRandomColor}>Generate random color</button>
+            </div>
+          </div>
+        );
+      };
+
+      const ColorListContainer = () => {
+        const [colorData, setColorData] = React.useState([]);
+        React.useEffect(() => {
+          if (window.location.protocol === "file:") {
+            setColorData(JSON.parse(colorJSON));
+          } else {
+            fetch("/colors.json")
+              .then(response => response.json())
+              .then(({ colors }) => setColorData(colors))
+              .catch(console.warn);
+          }
+        }, []);
+        const createColor = newColor => setColorData([...colorData, newColor]);
+        const handleColorClick = index => {
+          const colors = [...colorData];
+          colors[index].hsl = changeSaturation(colors[index].hsl);
+          setColorData(colors);
+        };
+        if (!colorData.length) return <div className="loader" />;
+        return (
+          <section>
+            <ColorCreator createColor={createColor} />
+            <ColorList
+              colorData={colorData}
+              handleColorClick={handleColorClick}
+              clickHandlerDescription="Click a color to see a different saturation."
+            />
+          </section>
+        );
+      };
+
+      // Finally, render the Container into the #root div using ReactDOM.
+      ReactDOM.render(<ColorListContainer />, document.getElementById("root"));
+    </script>
+  </body>
+</html>

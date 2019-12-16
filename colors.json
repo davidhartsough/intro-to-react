@@ -1,0 +1,7 @@
+{
+  "colors": [
+    { "name": "red", "hsl": "hsl(0, 100%, 50%)" },
+    { "name": "blue", "hsl": "hsl(240, 100%, 50%)" },
+    { "name": "purple", "hsl": "hsl(270, 100%, 50%)" }
+  ]
+}

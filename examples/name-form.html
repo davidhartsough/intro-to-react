@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, minimum-scale=1, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Intro to React</title>
+    <link rel="stylesheet" href="../normalize.slim.css" />
+    <link rel="stylesheet" href="../index.css" />
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <main id="root"></main>
+    <script src="https://unpkg.com/react/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone/babel.min.js"></script>
+    <script type="text/babel">
+      const Greeting = ({ name }) => <h1>Hey, {name}!</h1>;
+      function NameForm() {
+        const [name, setName] = React.useState("Steve");
+        const handleNameChange = ({ target }) => setName(target.value);
+        return (
+          <div>
+            <label>
+              Name:
+              <input type="text" value={name} onChange={handleNameChange} />
+            </label>
+            <hr />
+            <Greeting name={name} />
+          </div>
+        );
+      }
+      ReactDOM.render(<NameForm />, document.getElementById("root"));
+    </script>
+  </body>
+</html>
