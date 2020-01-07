@@ -30,20 +30,21 @@ const consonants = [
 ];
 const vowels = ["a", "e", "i", "o", "u"];
 
+const getRandomNumber = cap => Math.floor(Math.random() * cap);
+const getRandomItem = arr => arr[getRandomNumber(arr.length)];
+const getRandomConsonant = () => getRandomItem(consonants);
+const getRandomVowel = () => getRandomItem(vowels);
+const getRandomBool = () => Math.random() >= 0.5;
+const getRandomPair = () => getRandomVowel() + getRandomConsonant();
+
 function generateRandomColorName() {
-  let name =
-    consonants[Math.floor(Math.random() * consonants.length)] +
-    vowels[Math.floor(Math.random() * vowels.length)] +
-    consonants[Math.floor(Math.random() * consonants.length)];
-  if (Math.random() >= 0.5) {
-    name +=
-      vowels[Math.floor(Math.random() * vowels.length)] +
-      consonants[Math.floor(Math.random() * consonants.length)];
+  let name = Math.random() >= 0.3 ? getRandomConsonant() : getRandomPair();
+  name += getRandomPair();
+  if (getRandomBool()) {
+    name += getRandomPair();
   }
-  if (Math.random() >= 0.5) {
-    name +=
-      vowels[Math.floor(Math.random() * vowels.length)] +
-      consonants[Math.floor(Math.random() * consonants.length)];
+  if (getRandomBool()) {
+    name += getRandomPair();
   }
   return name;
 }
@@ -51,7 +52,7 @@ function generateRandomColorName() {
 function generateRandomColor() {
   return {
     name: generateRandomColorName(),
-    hsl: `hsl(${Math.floor(Math.random() * 359)}, 100%, 50%)`
+    hsl: `hsl(${getRandomNumber(359)}, 100%, 50%)`
   };
 }
 
