@@ -4,11 +4,48 @@
 
 — Facebook (the creators/maintainers of this thing)
 
+---
+
 ## Assumptions
 
-This assumes you already are familiar with ES6, especially arrow functions, const vs let, and object destructuring.
+This assumes you already are familiar with ES6, especially ...
 
-## What is it?
+- Variable declaration with `const` and `let`
+- Arrow functions `const getRandomBool = () => Math.random() >= 0.5;`
+- Object shorthand `const key = "value"; const obj = { key };`
+- Object destructuring `const { key } = obj;`
+- Array destructuring `const [item] = arr;`
+- Array spread operator `const copy = [...arr];`
+- .map array method `const itemNames = items.map(item => item.name);`
+- String template literals
+
+```js
+// variable declaration with const or let
+const dontChangeMyType = 1;
+let goAheadChangeMe = 1;
+goAheadChangeMe = false;
+// object shorthand
+const key = "value";
+const obj = { key };
+// object destructuring
+const object = { keyName: "val" };
+const { keyName } = object;
+// arrow functions
+const getRandomBool = () => Math.random() >= 0.5;
+// array spread operator
+const arr = [{ name: "Steve" }, { name: "Alicia" }];
+const people = [...arr, { name: "Bob" }];
+// .map array method
+const names = people.map(person => person.name);
+// array destructuring
+const [steve, alicia, bob] = names;
+// string template literals
+const greeting = `Hey, ${steve}!`;
+```
+
+---
+
+## What is React?
 
 React allows you to build an app interface out of a composition of **components** (written in **JSX**).
 
