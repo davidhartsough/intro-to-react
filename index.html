@@ -90,7 +90,7 @@
           if (window.location.protocol === "file:") {
             setColorData(JSON.parse(colorJSON));
           } else {
-            fetch("/colors.json")
+            fetch("./colors.json")
               .then(response => response.json())
               .then(({ colors }) => setColorData(colors))
               .catch(console.warn);
