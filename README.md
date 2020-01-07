@@ -4,6 +4,17 @@
 
 — Facebook (the creators/maintainers of this thing)
 
+**Table of Contents**
+
+- [What is React?](#what-is-react)
+- [Components](#components)
+- [JSX](#jsx)
+- [Props](#props)
+- [State](#state)
+- [Rendering](#rendering)
+- [Create React App](#create-react-app)
+- [Effects](#effects)
+
 ---
 
 ## Assumptions
@@ -103,7 +114,7 @@ function Clock() {
 }
 ```
 
-(See [`clock.html`](https://davidhartsough.com/intro-to-react/examples/clock.html) and [source](https://github.com/davidhartsough/intro-to-react/examples/clock.html).)
+(See [`clock.html`](https://davidhartsough.com/intro-to-react/examples/clock.html) and [source](https://github.com/davidhartsough/intro-to-react/blob/master/examples/clock.html).)
 
 JSX allows you to create components that mix your logic and data with your markup — tastefully. (By that I mean: better than template languages.)
 
@@ -125,7 +136,7 @@ function App() {
 }
 ```
 
-(See [`random.html`](https://davidhartsough.com/intro-to-react/examples/random.html) and [source](https://github.com/davidhartsough/intro-to-react/examples/random.html).)
+(See [`random.html`](https://davidhartsough.com/intro-to-react/examples/random.html) and [source](https://github.com/davidhartsough/intro-to-react/blob/master/examples/random.html).)
 
 This demonstrates another beauty of JSX: components become custom markup "elements", which are always denoted with capital letters. (Every component _must_ begin with a capital letter; otherwise React treats anything starting with lowercase letters as HTML DOM tags.) In this case, the RandomPhoto component is reused thrice and rendered inside the App component's element tree.
 
@@ -146,7 +157,7 @@ function ColorList() {
 }
 ```
 
-(See [`color-list.html`](https://davidhartsough.com/intro-to-react/examples/color-list.html) and [source](https://github.com/davidhartsough/intro-to-react/examples/color-list.html).)
+(See [`color-list.html`](https://davidhartsough.com/intro-to-react/examples/color-list.html) and [source](https://github.com/davidhartsough/intro-to-react/blob/master/examples/color-list.html).)
 
 Here we use a JavaScript array of strings (in the `colors` variable) to create 3 `<li>` elements and stylize the font of each with its respective color.
 
@@ -191,7 +202,7 @@ function App() {
 }
 ```
 
-(See [`color-lists.html`](https://davidhartsough.com/intro-to-react/examples/color-lists.html) and [source](https://github.com/davidhartsough/intro-to-react/examples/color-lists.html).)
+(See [`color-lists.html`](https://davidhartsough.com/intro-to-react/examples/color-lists.html) and [source](https://github.com/davidhartsough/intro-to-react/blob/master/examples/color-lists.html).)
 
 Every component is a function. Every component function recieves one parameter called props. Every props argument is an object. Every key-value pair is an individual prop. Every prop is passed to a component via HTML-attribute-like syntax in JSX.
 
@@ -223,7 +234,7 @@ function App() {
 }
 ```
 
-(See [`greeting.html`](https://davidhartsough.com/intro-to-react/examples/greeting.html) and [source](https://github.com/davidhartsough/intro-to-react/examples/greeting.html).)
+(See [`greeting.html`](https://davidhartsough.com/intro-to-react/examples/greeting.html) and [source](https://github.com/davidhartsough/intro-to-react/blob/master/examples/greeting.html).)
 
 This demonstrates the use of default props and "children" props. To set defaults for a component's props, all you have to do is set defaults for the function parameter.
 
@@ -248,6 +259,8 @@ function Clicker() {
 }
 ```
 
+(See [`clicker.html`](https://davidhartsough.com/intro-to-react/examples/clicker.html) and [source](https://github.com/davidhartsough/intro-to-react/blob/master/examples/clicker.html).)
+
 ### Syntax
 
 State is optional, so to declaratively include state, you must invoke `useState`, which you import from React. `useState` accepts one parameter, which sets the default for the state variable, and then it returns a pair (array) of values: `[1]` the current state variable and `[2]` a function that updates it. Best practices encourage you to destructure this returned array into two separate variables that should be named as a pair. The first returned value should be the name of the local variable itself (ex: `age` or `color`), but the second returned value should be named the same but with "set" as a prefix and then camelCase following (ex: `setAge` or `setColor`).
@@ -270,6 +283,8 @@ function NameForm() {
 }
 ```
 
+(See [`name-form.html`](https://davidhartsough.com/intro-to-react/examples/name-form.html) and [source](https://github.com/davidhartsough/intro-to-react/blob/master/examples/name-form.html).)
+
 ## Rendering
 
 So it's about dang time I showed you how to actually render any of these components you've been making. And the good news is that it's just a dead simple one-liner call to `ReactDom.render()`.
@@ -285,7 +300,7 @@ Yep. That's it.
 
 ## Create React App
 
-So far we've only tried things out in an HTML file with CDN imports of development JS files and then inline Babel scripts... That's not the real deal. It's just for testing in a tiny sandbox. If you actually want to create a legit, production-ready React app, use **Create React App**. See links to the GitHub,
+So far we've only tried things out in an HTML file with CDN imports of development JS files and then inline Babel scripts... That's not the real deal. It's just for testing in a tiny sandbox. If you actually want to create a legit, production-ready React app, use [**Create React App**](https://create-react-app.dev/) ([GitHub](https://github.com/facebook/create-react-app)).
 
 Wanna try it? If you have Node >= 8.10 and npm >= 5.6 on your machine, then just run these commands in your terminal:
 
