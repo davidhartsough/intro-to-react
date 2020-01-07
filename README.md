@@ -218,7 +218,7 @@ State is optional, so to declaratively include state, you must invoke `useState`
 ```js
 const Greeting = ({ name }) => <h1>Hey, {name}!</h1>;
 function NameForm() {
-  const [name, setName] = React.useState("Steve");
+  const [name, setName] = useState("Steve");
   const handleNameChange = ({ target }) => setName(target.value);
   return (
     <div>
@@ -264,8 +264,78 @@ Have fun!
 
 ## Effects
 
-Oh yeah, you might want to know about these things React calls "Effects". Basically, when you `useEffects` in your component, it allows you to (1) track prop changes or (2) run code once at the very beginning of a component's life (when it's first mounted to the DOM). If you're tracking changes to your component's props, you can do "side effects", like manually changing the DOM. But more often than not, you'll want to use `useEffects` as a means to fetch data when the component is first loaded/mounted/rendered.
+Oh yeah, you might want to know about these things React calls "Effects". Basically, when you `useEffect` in your component, it allows you to (1) track prop and state changes or (2) run code once at the very beginning of a component's life (when it's first mounted to the DOM). If you're tracking changes to your component's props, you can do "side effects", like manually changing the DOM. But more often than not, you'll want to use `useEffect` as a means to fetch data when the component is first loaded/mounted/rendered.
 
 > Data fetching, setting up a subscription, and manually changing the DOM in React components are all examples of side effects.
 
-// TODO: @David finish this.
+To use `useEffect`, you simply call it as a function inside your component function, after any state variables are declared. The function accepts two parameters: (1) a function to fire as the "side effect" and (2) an array of which prop or state variables to observe. The second parameter is optional, and, if omitted, the effect will run the first parameter function on _every_ render. The second parameter's purpose is to limit when the effect should fire. If you give a prop or state variable to the array (as the second parameter), then the effect will only be triggered when that prop or state variable changes. If you give `useEffect` an empty array as the second parameter, then it will only fire the effect **once** at the first mount of the component. (And for me personally, _that_ is the most important and frequently use case for my components.)
+
+If you need to "clean up" after yourself with the code you run inside your effect, then you should put _that_ code inside a function as the `return` of the first parameter function. That way, React knows to call that function you returned when the component is going to unmount or when one of the dependencies variables in your second parameter array changes. Usually the only use cases for this are effects that use subscriptions, setTimeout, or setInterval. (Otherwise, I don't really find myself needing to "clean up".)
+
+I find myself using the `useEffect` function when I need to fetch data from my database and put that data into state variables I've already declared.
+
+```js
+const ColorList = () => {
+  const [colorData, setColorData] = useState([]);
+  useEffect(
+    /* parameter 1: the side effect function */ () =>
+      fetch("/colors.json")
+        .then(response => response.json())
+        .then(({ colors }) => setColorData(colors))
+        .catch(console.warn),
+    /* parameter 2: the dependencies array */ []
+  );
+  return ( /* ... */ );
+};
+```
+
+If I needed to fetch a specific item from my database, based on a prop, then that would look like so:
+
+```js
+const url = "https://api.colors.com/v1/colors/";
+const ColorDetail = ({ colorId }) => {
+  const [color, setColor] = useState({});
+  useEffect(
+    /* parameter 1: the side effect function */ () =>
+      fetch(`${url}${colorId}`)
+        .then(response => response.json())
+        .then(setColor)
+        .catch(console.warn),
+    /* parameter 2: the dependencies array */ [colorId]
+  );
+  return ( /* ... */ );
+};
+```
+
+And here's the classic example of DOM manipulation:
+
+```js
+function Greeting({ name = "Steve" }) {
+  useEffect(() => {
+    document.title = `Hey, ${name}!`;
+  }, [name]);
+  return <p>Hey, {name}!</p>;
+}
+```
+
+Finally, here's a subscription example:
+
+```js
+function OnlineStatusIndicator({ personId }) {
+  useEffect(() => {
+    function handleStatusChange(status) {
+      // ...
+    }
+    PeopleAPI.subscribeToPersonStatus(personId, handleStatusChange);
+    // Clean up the subscription on unmount AND anytime personId changes.
+    return () => {
+      PeopleAPI.unsubscribeFromPersonStatus(personId, handleStatusChange);
+    };
+  }, [personId]);
+  return ( /* ... */ );
+}
+```
+
+## Boom bop!
+
+That's it! Thank you, come again!
